@@ -1,11 +1,15 @@
-from flask import Flask
+from flask import Flask, request
+from flask_restful import Resource, Api
 from flask import jsonify # <- `jsonify` instead of `json`
 
 app = Flask(__name__)
+api = Api(app)
 
-@app.route("/")
-def hello():
-    return jsonify({'text':'Hello World!'})
+class Employees(Resource):
+    def get(self):
+        return {'employees': [{'id':1, 'name':'Balram'},{'id':2, 'name':'Tom'}]} 
+
+api.add_resource(Employees, '/employees') # Route_1
 
 if __name__ == '__main__':
      app.run(port=5002)
